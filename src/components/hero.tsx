@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useCallback, useState } from "react";
@@ -7,7 +8,7 @@ import {
   MotionConfig,
   type Variants,
 } from "motion/react";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import { useLanguage } from "@/components/language-provider";
 import ProfileCard from "@/components/ui/ProfileCard";
@@ -50,7 +51,7 @@ export function Hero() {
     setIsExpanded(true);
   }, []);
 
-  const firstLine = "Hello, I'm Kevin";
+  const firstLine = `${t.hero.greeting} ${t.hero.firstLine}`;
 
   return (
     <MotionConfig reducedMotion="user">
@@ -60,10 +61,9 @@ export function Hero() {
         className="relative overflow-hidden"
       >
         {/* SCROLL EXPAND OPENING */}
-
         <ScrollExpand
-          title="Building ideas into digital experiences"
-          scrollHint="Scroll to explore"
+          title={t.hero.openingTitle}
+          scrollHint={t.hero.scrollHint}
           startWidth={72}
           startHeight={48}
           startRadius={28}
@@ -74,10 +74,8 @@ export function Hero() {
           onExpand={handleExpand}
         >
           {/* FULL HERO */}
-
           <div className="relative flex h-full w-full items-center overflow-hidden">
             {/* BACKGROUND */}
-
             <div
               aria-hidden
               className="bg-dot-grid pointer-events-none absolute inset-0 -z-10 opacity-25"
@@ -94,12 +92,9 @@ export function Hero() {
             />
 
             {/* HERO CONTAINER */}
-
             <div className="mx-auto flex w-full max-w-7xl items-center px-6 py-16 sm:px-8 lg:px-10">
               <div className="grid w-full items-center gap-12 lg:grid-cols-[minmax(0,1fr)_440px] xl:grid-cols-[minmax(0,1fr)_500px] xl:gap-16">
-
                 {/* LEFT — TEXT */}
-
                 <motion.div
                   variants={container}
                   initial="hidden"
@@ -107,24 +102,21 @@ export function Hero() {
                   className="flex min-w-0 flex-col items-start"
                 >
                   {/* NAME */}
-
                   <motion.div variants={item}>
                     <h1
                       id="hero-heading"
                       className="text-4xl font-semibold leading-[1.04] tracking-tight sm:text-5xl lg:text-[58px] xl:text-[64px]"
                     >
                       {/* First line */}
-
                       <span className="block whitespace-nowrap">
                         {firstLine}
                       </span>
 
                       {/* Second line */}
-
                       <span className="mt-2 block whitespace-nowrap">
                         {isExpanded && (
                           <TextType
-                            text="Reynaldi Panjaitan"
+                            text={t.hero.lastName}
                             as="span"
                             typingSpeed={75}
                             initialDelay={150}
@@ -142,16 +134,14 @@ export function Hero() {
                   </motion.div>
 
                   {/* ROLE */}
-
                   <motion.p
                     variants={item}
                     className="mt-6 bg-linear-to-r from-blue-500 to-violet-500 bg-clip-text text-xl font-semibold text-transparent sm:text-2xl"
                   >
-                    Full Stack Developer
+                    {t.hero.role}
                   </motion.p>
 
                   {/* DESCRIPTION */}
-
                   <motion.p
                     variants={item}
                     className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg"
@@ -160,21 +150,14 @@ export function Hero() {
                   </motion.p>
 
                   {/* CTA */}
-
                   <motion.div
                     variants={item}
                     className="mt-8 flex flex-wrap items-center gap-3"
                   >
-                    {/* View Projects */}
-
                     <motion.a
                       href="#projects"
-                      whileHover={{
-                        y: -2,
-                      }}
-                      whileTap={{
-                        scale: 0.98,
-                      }}
+                      whileHover={{ y: -2 }}
+                      whileTap={{ scale: 0.98 }}
                       className="focus-ring group inline-flex h-11 items-center gap-2 rounded-full bg-foreground px-6 text-sm font-medium text-background transition-shadow hover:shadow-[0_8px_30px_rgba(255,255,255,0.08)]"
                     >
                       {t.hero.viewProjects}
@@ -184,11 +167,9 @@ export function Hero() {
                         aria-hidden
                       />
                     </motion.a>
-
                   </motion.div>
 
                   {/* TECHNOLOGY AREAS */}
-
                   <motion.div
                     variants={item}
                     className="mt-6 flex flex-wrap items-center gap-2"
@@ -201,9 +182,7 @@ export function Hero() {
                     ].map((tech) => (
                       <motion.span
                         key={tech}
-                        whileHover={{
-                          y: -2,
-                        }}
+                        whileHover={{ y: -2 }}
                         className="rounded-full border border-border/80 bg-background/40 px-3 py-1.5 font-mono text-[11px] text-muted-foreground backdrop-blur-sm transition-colors hover:border-blue-500/40 hover:text-foreground"
                       >
                         {tech}
@@ -213,7 +192,6 @@ export function Hero() {
                 </motion.div>
 
                 {/* RIGHT — PROFILE CARD */}
-
                 <motion.div
                   initial={{
                     opacity: 0,
@@ -223,15 +201,15 @@ export function Hero() {
                   animate={
                     isExpanded
                       ? {
-                        opacity: 1,
-                        x: 0,
-                        scale: 1,
-                      }
+                          opacity: 1,
+                          x: 0,
+                          scale: 1,
+                        }
                       : {
-                        opacity: 0,
-                        x: 40,
-                        scale: 0.96,
-                      }
+                          opacity: 0,
+                          x: 40,
+                          scale: 0.96,
+                        }
                   }
                   transition={{
                     duration: 0.9,
@@ -241,14 +219,12 @@ export function Hero() {
                   className="relative mx-auto flex w-full max-w-[500px] justify-center"
                 >
                   {/* Blue glow */}
-
                   <div
                     aria-hidden
                     className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-600/[0.08] blur-[110px]"
                   />
 
                   {/* Violet glow */}
-
                   <div
                     aria-hidden
                     className="pointer-events-none absolute left-[58%] top-[55%] -z-10 h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-600/[0.07] blur-[100px]"
@@ -269,7 +245,7 @@ export function Hero() {
                     name=""
                     title=""
                     handle="kevinpnjtn"
-                    status="Available to build"
+                    status={t.hero.availability}
                     contactText=""
                     showUserInfo={true}
                     onContactClick={() => {
@@ -283,12 +259,11 @@ export function Hero() {
         </ScrollExpand>
 
         {/* SCROLL VELOCITY */}
-
         <div className="relative pt-2 pb-3">
           <ScrollVelocity
             texts={[
-              "KEVIN REYNALDI PANJAITAN  FULL STACK DEVELOPER",
-              "FULL STACK DEVELOPER  KEVIN REYNALDI PANJAITAN",
+              `${siteConfig.name.toUpperCase()}  ${t.hero.role.toUpperCase()}`,
+              `${t.hero.role.toUpperCase()}  ${siteConfig.name.toUpperCase()}`,
             ]}
             velocity={35}
             damping={50}

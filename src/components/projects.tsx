@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -14,22 +15,124 @@ import {
     X,
 } from "lucide-react";
 import {
-    siBootstrap, siCss, siDart, siFigma, siFirebase, siFlutter, siGit, siGithub, siHtml5, siJavascript, siLaravel, siMysql, siPostgresql, siNextdotjs,
-    siPhp, siSharp, siPostman, siReact, siSupabase, siTailwindcss, siTypescript,
+    siBootstrap,
+    siCss,
+    siDart,
+    siFigma,
+    siFirebase,
+    siFlutter,
+    siGit,
+    siGithub,
+    siHtml5,
+    siJavascript,
+    siLaravel,
+    siMysql,
+    siPostgresql,
+    siNextdotjs,
+    siPhp,
+    siSharp,
+    siPostman,
+    siReact,
+    siSupabase,
+    siTailwindcss,
+    siTypescript,
     type SimpleIcon,
 } from "simple-icons";
 
 import { projects, type Project } from "@/data/projects";
 import { certificates, type Certificate } from "@/data/certificates";
 import { portfolioContent } from "@/data/portfolio-content";
+import { useLanguage } from "@/components/language-provider";
 
 const INITIAL_ITEMS = 6;
 const ITEMS_PER_LOAD = 6;
 
 type ActiveFilter = "all" | "projects" | "certificates";
+
 type PortfolioItem =
     | { type: "project"; id: string; data: Project }
     | { type: "certificate"; id: string; data: Certificate };
+
+const translations = {
+    id: {
+        project: "Proyek",
+        certificate: "Sertifikat",
+        closeProject: "Tutup detail proyek",
+        closeCertificate: "Tutup detail sertifikat",
+        previousImage: "Gambar sebelumnya",
+        nextImage: "Gambar berikutnya",
+        showImage: "Tampilkan gambar",
+        gallery: "Galeri gambar",
+        imageInstructions: "Gunakan tombol panah atau tombol panah pada keyboard untuk melihat gambar.",
+        role: "Peran dan Kontribusi",
+        features: "Fitur Utama",
+        techStack: "Teknologi yang Digunakan",
+        viewCode: "Lihat Kode",
+        viewLink: "Buka tautan",
+        repositoryUnavailable: "Repository belum tersedia",
+        detail: "Detail",
+        all: "Semua",
+        projects: "Proyek",
+        certificates: "Sertifikat",
+        showing: "Menampilkan",
+        items: "item",
+        viewCertificate: "Lihat Sertifikat",
+        certificateLabel: "Sertifikat",
+        description: "Deskripsi",
+        learnings: "Hal yang Dipelajari",
+        loadMore: "Muat Lebih Banyak",
+        emptyProjects: "Proyek akan ditampilkan di sini.",
+        emptyCertificates: "Sertifikat akan ditampilkan di sini.",
+        emptyAll: "Konten portofolio akan ditampilkan di sini.",
+        projectPreview: "Pratinjau Proyek",
+        certificatePreview: "Pratinjau Sertifikat",
+        projectImage: "Gambar proyek",
+        certificateImage: "Gambar sertifikat",
+        portfolio: "PORTOFOLIO",
+        projectsEyebrow: "PROYEK & SERTIFIKAT",
+    },
+    en: {
+        project: "Project",
+        certificate: "Certificate",
+        closeProject: "Close project details",
+        closeCertificate: "Close certificate details",
+        previousImage: "Previous image",
+        nextImage: "Next image",
+        showImage: "Show image",
+        gallery: "Image gallery",
+        imageInstructions: "Use the arrow buttons or keyboard arrow keys to browse screenshots.",
+        role: "Role & Contributions",
+        features: "Key Features",
+        techStack: "Technologies Used",
+        viewCode: "View Code",
+        viewLink: "Open link",
+        repositoryUnavailable: "Repository unavailable",
+        detail: "Details",
+        all: "All",
+        projects: "Projects",
+        certificates: "Certificates",
+        showing: "Showing",
+        items: "items",
+        viewCertificate: "View Certificate",
+        certificateLabel: "Certificate",
+        description: "Description",
+        learnings: "Key Learnings",
+        loadMore: "Load More",
+        emptyProjects: "Projects will appear here.",
+        emptyCertificates: "Certificates will appear here.",
+        emptyAll: "Portfolio content will appear here.",
+        projectPreview: "Project Preview",
+        certificatePreview: "Certificate Preview",
+        projectImage: "Project image",
+        certificateImage: "Certificate image",
+        portfolio: "PORTFOLIO",
+        projectsEyebrow: "PROJECTS & CERTIFICATES",
+    },
+};
+
+/* --------------------------------------------------
+   TECHNOLOGY ICONS
+-------------------------------------------------- */
 
 const technologyIcons: Record<string, SimpleIcon> = {
     Bootstrap: siBootstrap,
@@ -83,10 +186,12 @@ function TechnologyIcon({ name }: { name: string }) {
 function ProjectPreview({
     src,
     title,
+    placeholder,
     sizes = "(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw",
 }: {
     src?: string;
     title: string;
+    placeholder: string;
     sizes?: string;
 }) {
     const [imageFailed, setImageFailed] = useState(false);
@@ -95,13 +200,13 @@ function ProjectPreview({
         return (
             <div
                 role="img"
-                aria-label={`${title} image placeholder`}
+                aria-label={`${title} ${placeholder}`}
                 className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-blue-500/15 via-blue-500/10 to-[#101016]"
             >
                 <div className="flex flex-col items-center gap-3 text-white/35">
                     <FolderOpen size={34} strokeWidth={1.25} />
                     <span className="text-[10px] uppercase tracking-[0.22em]">
-                        Pratinjau Proyek
+                        {placeholder}
                     </span>
                 </div>
             </div>
@@ -111,7 +216,7 @@ function ProjectPreview({
     return (
         <Image
             src={src}
-            alt={`${title} screenshot`}
+            alt={`${title} ${placeholder}`}
             fill
             sizes={sizes}
             className="object-contain"
@@ -127,10 +232,12 @@ function ProjectPreview({
 function SertifikatPreview({
     src,
     title,
+    placeholder,
     sizes = "(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw",
 }: {
     src?: string;
     title: string;
+    placeholder: string;
     sizes?: string;
 }) {
     const [imageFailed, setImageFailed] = useState(false);
@@ -139,13 +246,13 @@ function SertifikatPreview({
         return (
             <div
                 role="img"
-                aria-label={`${title} certificate image placeholder`}
+                aria-label={`${title} ${placeholder}`}
                 className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-blue-500/15 via-blue-500/10 to-[#101016]"
             >
                 <div className="flex flex-col items-center gap-3 text-white/35">
                     <Award size={34} strokeWidth={1.25} />
                     <span className="text-[10px] uppercase tracking-[0.22em]">
-                        Pratinjau Sertifikat
+                        {placeholder}
                     </span>
                 </div>
             </div>
@@ -155,7 +262,7 @@ function SertifikatPreview({
     return (
         <Image
             src={src}
-            alt={`Sertifikat: ${title}`}
+            alt={`${placeholder}: ${title}`}
             fill
             sizes={sizes}
             className="object-contain"
@@ -170,11 +277,14 @@ function SertifikatPreview({
 
 function ProjectModal({
     project,
+    locale,
     onClose,
 }: {
     project: Project;
+    locale: "id" | "en";
     onClose: () => void;
 }) {
+    const t = translations[locale];
     const images = project.images.length ? project.images : [""];
     const [activeImage, setActiveImage] = useState(0);
 
@@ -211,7 +321,9 @@ function ProjectModal({
             }
 
             if (event.key === "ArrowRight") {
-                setActiveImage((current) => (current + 1) % images.length);
+                setActiveImage(
+                    (current) => (current + 1) % images.length,
+                );
             }
         },
         [images.length, onClose],
@@ -255,7 +367,7 @@ function ProjectModal({
             >
                 <div className="flex shrink-0 items-center justify-between border-b border-white/10 px-4 py-3 sm:px-6">
                     <div className="flex min-w-0 items-center gap-2 text-xs text-white/45">
-                        <span>PROYEK</span>
+                        <span>{t.project.toUpperCase()}</span>
                         <span>/</span>
                         <span className="truncate text-white/80">
                             {project.title}
@@ -265,7 +377,7 @@ function ProjectModal({
                     <button
                         type="button"
                         onClick={onClose}
-                        aria-label="Tutup detail proyek"
+                        aria-label={t.closeProject}
                         autoFocus
                         className="ml-3 flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-full border border-white/10 text-white/70 transition hover:border-white/20 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-blue-400"
                     >
@@ -280,6 +392,7 @@ function ProjectModal({
                                 <ProjectPreview
                                     src={images[activeImage]}
                                     title={project.title}
+                                    placeholder={t.projectPreview}
                                     sizes="(max-width: 767px) 100vw, (max-width: 1499px) 60vw, 900px"
                                 />
 
@@ -288,7 +401,7 @@ function ProjectModal({
                                         <button
                                             type="button"
                                             onClick={() => changeImage(-1)}
-                                            aria-label="Gambar sebelumnya"
+                                            aria-label={t.previousImage}
                                             className="absolute left-3 top-1/2 flex size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-black/60 text-white backdrop-blur-md transition hover:bg-black/85 focus-visible:outline-2 focus-visible:outline-blue-400"
                                         >
                                             <ArrowLeft size={18} />
@@ -297,7 +410,7 @@ function ProjectModal({
                                         <button
                                             type="button"
                                             onClick={() => changeImage(1)}
-                                            aria-label="Gambar berikutnya"
+                                            aria-label={t.nextImage}
                                             className="absolute right-3 top-1/2 flex size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-black/60 text-white backdrop-blur-md transition hover:bg-black/85 focus-visible:outline-2 focus-visible:outline-blue-400"
                                         >
                                             <ArrowRight size={18} />
@@ -313,23 +426,24 @@ function ProjectModal({
                             {images.length > 1 && (
                                 <div
                                     className="mt-3 flex gap-2 overflow-x-auto pb-1"
-                                    aria-label="Galeri gambar"
+                                    aria-label={t.gallery}
                                 >
                                     {images.map((src, index) => (
                                         <button
                                             key={`${src}-${index}`}
                                             type="button"
                                             onClick={() => setActiveImage(index)}
-                                            aria-label={`Tampilkan gambar ${index + 1}`}
+                                            aria-label={`${t.showImage} ${index + 1}`}
                                             aria-pressed={activeImage === index}
                                             className={`relative size-16 shrink-0 cursor-pointer overflow-hidden rounded-lg border bg-white/5 sm:size-20 ${activeImage === index
-                                                ? "border-blue-400"
-                                                : "border-white/10 opacity-60 hover:opacity-100"
+                                                    ? "border-blue-400"
+                                                    : "border-white/10 opacity-60 hover:opacity-100"
                                                 }`}
                                         >
                                             <ProjectPreview
                                                 src={src}
                                                 title={project.title}
+                                                placeholder={t.projectPreview}
                                                 sizes="80px"
                                             />
                                         </button>
@@ -338,14 +452,13 @@ function ProjectModal({
                             )}
 
                             <p className="mt-4 text-xs text-white/35">
-                                Use the arrows or keyboard arrow keys to browse
-                                screenshots.
+                                {t.imageInstructions}
                             </p>
                         </div>
 
                         <div className="p-5 sm:p-7 md:p-8">
                             <span className="inline-flex rounded-full border border-blue-400/20 bg-blue-400/10 px-3 py-1.5 text-xs text-blue-300">
-                                {project.category}
+                                {project.category[locale]}
                             </span>
 
                             <h3
@@ -356,34 +469,31 @@ function ProjectModal({
                             </h3>
 
                             <p className="mt-4 text-sm leading-7 text-white/60">
-                                {project.description}
+                                {project.description[locale]}
                             </p>
 
                             <div className="mt-7">
                                 <h4 className="text-sm font-medium text-white">
-                                    Peran dan Kontribusi
+                                    {t.role}
                                 </h4>
                                 <p className="mt-2 text-sm leading-6 text-white/55">
-                                    {project.role}
+                                    {project.role[locale]}
                                 </p>
                             </div>
 
                             {project.features.length > 0 && (
                                 <div className="mt-7">
                                     <h4 className="text-sm font-medium text-white">
-                                        Fitur Utama
+                                        {t.features}
                                     </h4>
-                                    <ul className="mt-3 space-y-3">
-                                        {project.features.map((feature) => (
+
+                                    <ul className="mt-3 list-disc space-y-3 pl-5 marker:text-white/40">
+                                        {project.features.map((feature, index) => (
                                             <li
-                                                key={feature}
-                                                className="flex items-start gap-3 text-sm leading-6 text-white/60"
+                                                key={`${feature.id}-${index}`}
+                                                className="pl-1 text-sm leading-6 text-white/60"
                                             >
-                                                <Check
-                                                    size={16}
-                                                    className="mt-1 shrink-0 text-blue-400"
-                                                />
-                                                <span>{feature}</span>
+                                                {feature[locale]}
                                             </li>
                                         ))}
                                     </ul>
@@ -393,8 +503,9 @@ function ProjectModal({
                             {project.techStack.length > 0 && (
                                 <div className="mt-7 pb-5">
                                     <h4 className="text-sm font-medium text-white">
-                                        Tech Stack
+                                        {t.techStack}
                                     </h4>
+
                                     <div className="mt-3 flex flex-wrap gap-2">
                                         {project.techStack.map((tech) => (
                                             <span
@@ -410,8 +521,7 @@ function ProjectModal({
                             )}
 
                             {project.links && project.links.length > 0 && (
-                                <div className="mt-5 flex items-center justify-between gap-4 border-t border-white/10 pt-6">
-
+                                <div className="mt-5 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6">
                                     {project.links.map((link) => {
                                         const isGithub =
                                             link.url.toLowerCase().includes("github.com") ||
@@ -427,10 +537,11 @@ function ProjectModal({
                                                 rel="noopener noreferrer"
                                                 aria-label={
                                                     isGithub
-                                                        ? `Lihat kode ${project.title} di GitHub`
-                                                        : `Buka ${link.label} untuk ${project.title}`
+                                                        ? `${t.viewCode} ${project.title} di GitHub`
+                                                        : `${t.viewLink}: ${link.label}`
                                                 }
-                                                className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-[#08080a] px-3.5 py-2 text-sm font-semibold text-white transition hover:border-white/30 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400"                                            >
+                                                className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-[#08080a] px-3.5 py-2 text-sm font-semibold text-white transition hover:border-white/30 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400"
+                                            >
                                                 {isGithub && (
                                                     <svg
                                                         aria-hidden="true"
@@ -442,20 +553,21 @@ function ProjectModal({
                                                     </svg>
                                                 )}
 
-                                                {isGithub ? "Lihat Kode" : link.label}
+                                                {isGithub ? t.viewCode : link.label}
 
-                                                {!isGithub && <ExternalLink size={15} />}
+                                                {!isGithub && (
+                                                    <ExternalLink size={15} />
+                                                )}
                                             </a>
                                         );
                                     })}
-
                                 </div>
                             )}
                         </div>
                     </div>
                 </div>
             </motion.section>
-        </motion.div >
+        </motion.div>
     );
 }
 
@@ -465,11 +577,14 @@ function ProjectModal({
 
 function SertifikatModal({
     certificate,
+    locale,
     onClose,
 }: {
     certificate: Certificate;
+    locale: "id" | "en";
     onClose: () => void;
 }) {
+    const t = translations[locale];
 
     useEffect(() => {
         const previousOverflow = document.body.style.overflow;
@@ -512,23 +627,26 @@ function SertifikatModal({
                 <button
                     type="button"
                     onClick={onClose}
-                    aria-label="Tutup detail sertifikat"
+                    aria-label={t.closeCertificate}
                     className="absolute right-4 top-4 flex size-9 items-center justify-center rounded-full border border-white/10 text-white/70 transition hover:bg-white/10"
                 >
                     <X size={18} />
                 </button>
 
                 <div className="mb-5 flex items-center gap-2 text-xs text-white/45">
-                    <span>PORTFOLIO</span>
+                    <span>{t.portfolio}</span>
                     <span>/</span>
-                    <span className="text-white/80">CERTIFICATES</span>
+                    <span className="text-white/80">
+                        {t.certificates.toUpperCase()}
+                    </span>
                 </div>
 
                 <div className="relative mb-6 flex min-h-48 items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] p-3">
-                    <div className="relative min-h-[12rem] w-full max-w-full aspect-[12/8]">
+                    <div className="relative aspect-[12/8] min-h-[12rem] w-full max-w-full">
                         <SertifikatPreview
                             src={certificate.image}
                             title={certificate.title}
+                            placeholder={t.certificatePreview}
                             sizes="(max-width: 768px) 100vw, 700px"
                         />
                     </div>
@@ -536,7 +654,7 @@ function SertifikatModal({
 
                 <span className="inline-flex items-center gap-2 rounded-full border border-blue-400/20 bg-blue-400/10 px-3 py-1.5 text-xs text-blue-300">
                     <Award size={14} />
-                    Sertifikat
+                    {t.certificateLabel}
                 </span>
 
                 <h3
@@ -559,7 +677,7 @@ function SertifikatModal({
                 {certificate.description && (
                     <div className="mt-7">
                         <h4 className="text-sm font-medium text-white">
-                            Deskripsi
+                            {t.description}
                         </h4>
                         <p className="mt-2 text-sm leading-7 text-white/60">
                             {certificate.description}
@@ -570,12 +688,13 @@ function SertifikatModal({
                 {certificate.learnings.length > 0 && (
                     <div className="mt-7">
                         <h4 className="text-sm font-medium text-white">
-                            Hal yang Dipelajari
+                            {t.learnings}
                         </h4>
+
                         <ul className="mt-3 space-y-3">
-                            {certificate.learnings.map((learning) => (
+                            {certificate.learnings.map((learning, index) => (
                                 <li
-                                    key={learning}
+                                    key={`${learning}-${index}`}
                                     className="flex items-start gap-3 text-sm leading-6 text-white/60"
                                 >
                                     <Check
@@ -602,26 +721,31 @@ function SertifikatModal({
                         ))}
                     </div>
                 )}
-
             </motion.section>
         </motion.div>
     );
 }
 
 /* --------------------------------------------------
-   PROYEK & CERTIFICATES SECTION
+   PROJECTS & CERTIFICATES SECTION
 -------------------------------------------------- */
 
 export function Projects() {
+    const { locale } = useLanguage();
+
+    const t = translations[locale];
     const content = portfolioContent.projects;
 
     const [visibleCount, setVisibleCount] = useState(INITIAL_ITEMS);
-    const [selectedProject, setSelectedProject] = useState<Project | null>(
-        null,
-    );
+
+    const [selectedProject, setSelectedProject] =
+        useState<Project | null>(null);
+
     const [selectedSertifikat, setSelectedSertifikat] =
         useState<Certificate | null>(null);
-    const [activeFilter, setActiveFilter] = useState<ActiveFilter>("all");
+
+    const [activeFilter, setActiveFilter] =
+        useState<ActiveFilter>("all");
 
     const allItems: PortfolioItem[] = [
         ...projects.map((project) => ({
@@ -636,10 +760,12 @@ export function Projects() {
         })),
     ];
 
-
     const filteredItems = allItems.filter((item) => {
         if (activeFilter === "all") return true;
-        return item.type === (activeFilter === "projects" ? "project" : "certificate");
+
+        return item.type === (
+            activeFilter === "projects" ? "project" : "certificate"
+        );
     });
 
     const visibleItems = filteredItems.slice(0, visibleCount);
@@ -651,17 +777,17 @@ export function Projects() {
         count: number;
     }[] = [
             {
-                label: "All",
+                label: t.all,
                 value: "all",
                 count: allItems.length,
             },
             {
-                label: "Proyek",
+                label: t.projects,
                 value: "projects",
                 count: projects.length,
             },
             {
-                label: "Sertifikat",
+                label: t.certificates,
                 value: "certificates",
                 count: certificates.length,
             },
@@ -705,8 +831,12 @@ export function Projects() {
                         </p>
                     </div>
 
-                    <p className="text-sm text-white/40" aria-live="polite">
-                        Menampilkan {visibleItems.length} dari {filteredItems.length} item
+                    <p
+                        className="text-sm text-white/40"
+                        aria-live="polite"
+                    >
+                        {t.showing} {visibleItems.length} {locale === "id" ? "dari" : "of"}{" "}
+                        {filteredItems.length} {t.items}
                     </p>
                 </motion.div>
 
@@ -722,8 +852,8 @@ export function Projects() {
                                 onClick={() => changeFilter(filter.value)}
                                 aria-pressed={isActive}
                                 className={`inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2.5 text-sm transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 ${isActive
-                                    ? "border-blue-400/40 bg-blue-500/15 text-blue-200"
-                                    : "border-white/10 bg-white/[0.025] text-white/55 hover:border-white/20 hover:bg-white/[0.06] hover:text-white"
+                                        ? "border-blue-400/40 bg-blue-500/15 text-blue-200"
+                                        : "border-white/10 bg-white/[0.025] text-white/55 hover:border-white/20 hover:bg-white/[0.06] hover:text-white"
                                     }`}
                             >
                                 {filter.value === "certificates" && (
@@ -734,8 +864,8 @@ export function Projects() {
 
                                 <span
                                     className={`rounded-full px-2 py-0.5 text-[11px] ${isActive
-                                        ? "bg-blue-400/15 text-blue-200"
-                                        : "bg-white/[0.06] text-white/45"
+                                            ? "bg-blue-400/15 text-blue-200"
+                                            : "bg-white/[0.06] text-white/45"
                                         }`}
                                 >
                                     {filter.count}
@@ -750,16 +880,27 @@ export function Projects() {
                     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
                         <AnimatePresence initial={false} mode="popLayout">
                             {visibleItems.map((item, index) => {
-
                                 if (item.type === "project") {
                                     const project = item.data;
 
-                                    const githubLinks = (project.links ?? []).filter((link) => {
-                                        const label = link.label.trim().toLowerCase();
+                                    const githubLinks = (
+                                        project.links ?? []
+                                    ).filter((link) => {
+                                        const label = link.label
+                                            .trim()
+                                            .toLowerCase();
 
                                         return (
-                                            link.url.toLowerCase().includes("github.com") ||
-                                            ["github", "kode", "code", "frontend", "backend"].includes(label)
+                                            link.url
+                                                .toLowerCase()
+                                                .includes("github.com") ||
+                                            [
+                                                "github",
+                                                "kode",
+                                                "code",
+                                                "frontend",
+                                                "backend",
+                                            ].includes(label)
                                         );
                                     });
 
@@ -771,7 +912,11 @@ export function Projects() {
                                             exit={{ opacity: 0, y: 12 }}
                                             transition={{
                                                 duration: 0.3,
-                                                delay: Math.min(index % ITEMS_PER_LOAD, 5) * 0.04,
+                                                delay:
+                                                    Math.min(
+                                                        index % ITEMS_PER_LOAD,
+                                                        5,
+                                                    ) * 0.04,
                                             }}
                                             whileHover={{ y: -5 }}
                                             className="flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-white/[0.09] bg-[#101014] transition-colors duration-300 hover:border-blue-400/30 sm:rounded-3xl"
@@ -779,20 +924,26 @@ export function Projects() {
                                             {/* Project image */}
                                             <button
                                                 type="button"
-                                                onClick={() => setSelectedProject(project)}
-                                                aria-label={`Lihat detail proyek ${project.title}`}
+                                                onClick={() =>
+                                                    setSelectedProject(project)
+                                                }
+                                                aria-label={`${locale === "id"
+                                                        ? "Lihat detail proyek"
+                                                        : "View project details"
+                                                    } ${project.title}`}
                                                 className="group relative block aspect-[16/10] w-full shrink-0 cursor-pointer overflow-hidden bg-[#111118] focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-blue-400"
                                             >
                                                 <ProjectPreview
                                                     src={project.images[0]}
                                                     title={project.title}
+                                                    placeholder={t.projectPreview}
                                                     sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
                                                 />
 
                                                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent" />
 
                                                 <span className="absolute left-4 top-4 rounded-full border border-white/15 bg-blue-500/90 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
-                                                    {project.category}
+                                                    {project.category[locale]}
                                                 </span>
 
                                                 {project.year && (
@@ -819,22 +970,23 @@ export function Projects() {
                                                 </div>
 
                                                 <p className="mt-3 line-clamp-3 text-sm leading-6 text-white/55">
-                                                    {project.shortDescription}
+                                                    {project.shortDescription[locale]}
                                                 </p>
 
-                                                {/* Bottom block: Tech stack + divider + footer, selalu menempel ke dasar kartu */}
+                                                {/* Tech stack + footer */}
                                                 <div className="mt-auto pt-5">
-                                                    {/* Tech stack: selalu dirender agar tinggi baris konsisten */}
                                                     <div className="flex min-h-7 flex-wrap content-start items-center gap-2">
-                                                        {project.techStack.slice(0, 3).map((tech) => (
-                                                            <span
-                                                                key={tech}
-                                                                className="inline-flex h-7 items-center gap-1.5 rounded-full border border-white/[0.09] bg-white/[0.035] px-2.5 text-[11px] leading-none text-white/70"
-                                                            >
-                                                                <TechnologyIcon name={tech} />
-                                                                {tech}
-                                                            </span>
-                                                        ))}
+                                                        {project.techStack
+                                                            .slice(0, 3)
+                                                            .map((tech) => (
+                                                                <span
+                                                                    key={tech}
+                                                                    className="inline-flex h-7 items-center gap-1.5 rounded-full border border-white/[0.09] bg-white/[0.035] px-2.5 text-[11px] leading-none text-white/70"
+                                                                >
+                                                                    <TechnologyIcon name={tech} />
+                                                                    {tech}
+                                                                </span>
+                                                            ))}
 
                                                         {project.techStack.length > 3 && (
                                                             <span className="inline-flex h-7 items-center rounded-full border border-white/[0.08] px-2.5 text-[11px] leading-none text-white/45">
@@ -868,17 +1020,19 @@ export function Projects() {
                                                                 ))
                                                             ) : (
                                                                 <span className="text-xs text-white/35">
-                                                                    Repository belum tersedia
+                                                                    {t.repositoryUnavailable}
                                                                 </span>
                                                             )}
                                                         </div>
 
                                                         <button
                                                             type="button"
-                                                            onClick={() => setSelectedProject(project)}
+                                                            onClick={() =>
+                                                                setSelectedProject(project)
+                                                            }
                                                             className="inline-flex shrink-0 cursor-pointer items-center gap-1.5 text-sm font-medium text-blue-300 transition hover:text-blue-200"
                                                         >
-                                                            Detail
+                                                            {t.detail}
                                                             <ArrowUpRight size={16} />
                                                         </button>
                                                     </div>
@@ -888,21 +1042,26 @@ export function Projects() {
                                     );
                                 }
 
-
                                 const certificate = item.data;
 
                                 return (
                                     <motion.button
                                         key={`certificate-${certificate.id}`}
                                         type="button"
-                                        onClick={() => setSelectedSertifikat(certificate)}
-                                        aria-label={`Lihat sertifikat: ${certificate.title}`}
+                                        onClick={() =>
+                                            setSelectedSertifikat(certificate)
+                                        }
+                                        aria-label={`${t.viewCertificate}: ${certificate.title}`}
                                         initial={{ opacity: 0, y: 18 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: 12 }}
                                         transition={{
                                             duration: 0.3,
-                                            delay: Math.min(index % ITEMS_PER_LOAD, 5) * 0.04,
+                                            delay:
+                                                Math.min(
+                                                    index % ITEMS_PER_LOAD,
+                                                    5,
+                                                ) * 0.04,
                                         }}
                                         whileHover={{ y: -5 }}
                                         whileTap={{ scale: 0.99 }}
@@ -912,12 +1071,13 @@ export function Projects() {
                                             <SertifikatPreview
                                                 src={certificate.image}
                                                 title={certificate.title}
+                                                placeholder={t.certificatePreview}
                                                 sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
                                             />
 
                                             <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-blue-400/20 bg-[#0b0b10]/85 px-3 py-1.5 text-xs text-blue-200 backdrop-blur-md">
                                                 <Award size={13} />
-                                                Sertifikat
+                                                {t.certificateLabel}
                                             </span>
 
                                             <span className="absolute bottom-4 right-4 flex size-9 items-center justify-center rounded-full border border-white/15 bg-black/50 text-white backdrop-blur-md transition group-hover:border-blue-400/40 group-hover:bg-blue-500/20">
@@ -963,7 +1123,7 @@ export function Projects() {
                                             )}
 
                                             <div className="mt-5 flex items-center gap-2 text-sm text-blue-300/80 transition-colors group-hover:text-blue-300">
-                                                Lihat Sertifikat
+                                                {t.viewCertificate}
                                                 <ArrowUpRight size={15} />
                                             </div>
                                         </div>
@@ -975,14 +1135,14 @@ export function Projects() {
                 ) : (
                     <p className="rounded-2xl border border-white/10 p-8 text-center text-sm text-white/50">
                         {activeFilter === "projects"
-                            ? "Proyek akan ditampilkan di sini."
+                            ? t.emptyProjects
                             : activeFilter === "certificates"
-                                ? "Sertifikat will appear here once added."
-                                : "Konten portofolio akan ditampilkan di sini."}
+                                ? t.emptyCertificates
+                                : t.emptyAll}
                     </p>
                 )}
 
-                {/* One Muat Lebih Banyak button for the active filter */}
+                {/* Load more */}
                 {hasMore && (
                     <div className="mt-10 flex justify-center sm:mt-12">
                         <button
@@ -997,29 +1157,32 @@ export function Projects() {
                             }
                             className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-6 py-3 text-sm text-white/75 transition hover:border-blue-400/30 hover:bg-blue-500/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-400"
                         >
-                            Muat Lebih Banyak
+                            {t.loadMore}
                             <ArrowRight size={16} />
                         </button>
                     </div>
                 )}
             </div>
 
-            {/* Modals */}
+            {/* Project modal */}
             <AnimatePresence>
                 {selectedProject && (
                     <ProjectModal
                         key={selectedProject.id}
                         project={selectedProject}
+                        locale={locale}
                         onClose={() => setSelectedProject(null)}
                     />
                 )}
             </AnimatePresence>
 
+            {/* Certificate modal */}
             <AnimatePresence>
                 {selectedSertifikat && (
                     <SertifikatModal
                         key={selectedSertifikat.id}
                         certificate={selectedSertifikat}
+                        locale={locale}
                         onClose={() => setSelectedSertifikat(null)}
                     />
                 )}

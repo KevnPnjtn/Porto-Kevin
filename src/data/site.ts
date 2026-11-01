@@ -1,4 +1,5 @@
-export type Locale = "en" | "id";
+
+export type Locale = "id" | "en";
 
 export const siteConfig = {
   name: "Kevin Reynaldi Panjaitan",
@@ -19,87 +20,49 @@ export const navIds = [
 
 export type SectionId = (typeof navIds)[number];
 
-
-const en = {
-  nav: {
-    home: "Home",
-    about: "About",
-    skills: "Skills",
-    projects: "Projects",
-  } satisfies Record<SectionId, string>,
-  ui: {
-    toggleTheme: "Toggle theme",
-    language: "Language",
-    openMenu: "Open menu",
-    closeMenu: "Close menu",
-    mainNav: "Main navigation",
-    opensInNewTab: "opens in a new tab",
-  },
-  hero: {
-    greeting: "Hello, I'm a",
-    role: "Full Stack Developer",
-    description:
-      "I build web and mobile applications with modern technologies to create practical digital solutions.",
-    viewProjects: "View Projects",
-    downloadCv: "Download CV",
-    badge: "Web Developer & Problem Solver",
-    scrollDown: "Scroll Down",
-    profileAlt: "Portrait of Kevin Reynaldi Panjaitan",
-    socialLabel: "Social links",
-  },
-  skills: {
-    eyebrow: "Tech stack",
-    title: "Skills &",
-    titleAccent: "Technologies",
-    description:
-      "I use a range of technologies to build web and mobile applications, from the interface people see to the API and database behind it.",
-    highlightNote: "Highlighted: the technologies I use most.",
-    categories: {
-      languages: "Programming Languages",
-      frontend: "Frontend & Mobile",
-      backend: "Backend & API",
-      database: "Database",
-      tools: "Tools & Workflow",
-    },
-  },
-};
-
-export type Dictionary = typeof en;
-
-const id: Dictionary = {
+// Bahasa Indonesia
+const id = {
   nav: {
     home: "Beranda",
-    about: "Tentang",
+    about: "Tentang Saya",
     skills: "Keahlian",
     projects: "Proyek",
-  },
+  } satisfies Record<SectionId, string>,
+
   ui: {
     toggleTheme: "Ganti tema",
     language: "Bahasa",
     openMenu: "Buka menu",
+    switchTo: "Ganti ke",
     closeMenu: "Tutup menu",
     mainNav: "Navigasi utama",
     opensInNewTab: "dibuka di tab baru",
   },
+
   hero: {
     greeting: "Halo, saya",
-    role: "Lulusan Teknik Informatika",
+    firstLine: "Kevin",
+    lastName: "Reynaldi Panjaitan",
+    role: "Web & Mobile Developer",
     description:
-      "Saya membangun aplikasi web dan mobile dengan teknologi modern untuk menciptakan solusi digital yang praktis.",
+      "Saya mengembangkan aplikasi web dan mobile dengan memanfaatkan teknologi modern untuk menghadirkan solusi digital yang fungsional, praktis, dan berorientasi pada kebutuhan pengguna.",
     viewProjects: "Lihat Proyek",
     downloadCv: "Unduh CV",
-    badge: "Web Developer & Problem Solver",
-    scrollDown: "Gulir ke Bawah",
-    profileAlt: "Potret Kevin Reynaldi Panjaitan",
-    socialLabel: "Tautan sosial",
+    badge: "Web & Mobile Developer",
+    scrollDown: "Jelajahi Lebih Lanjut",
+    scrollHint: "Gulir untuk menjelajahi",
+    openingTitle: "Mengubah Ide Menjadi Pengalaman Digital",
+    profileAlt: "Foto profil Kevin Reynaldi Panjaitan",
+    socialLabel: "Media sosial dan kontak",
+    availability: "Terbuka untuk Kolaborasi",
   },
+
   skills: {
-    eyebrow: "Tech stack",
-    title: "Skills &",
+    eyebrow: "Teknologi yang Digunakan",
+    title: "Keahlian &",
     titleAccent: "Teknologi",
     description:
-      "Saya menggunakan berbagai teknologi untuk membangun aplikasi web dan mobile, mulai dari antarmuka yang dilihat pengguna hingga API dan database di baliknya.",
-    highlightNote: "Disorot: teknologi yang paling sering saya gunakan.",
+      "Berbagai teknologi yang saya gunakan dalam pengembangan aplikasi web dan mobile, mencakup bahasa pemrograman, frontend, backend, database, hingga tools pendukung pengembangan.",
     categories: {
       languages: "Bahasa Pemrograman",
       frontend: "Frontend & Mobile",
@@ -110,4 +73,62 @@ const id: Dictionary = {
   },
 };
 
-export const dictionary: Record<Locale, Dictionary> = { en, id };
+export type Dictionary = typeof id;
+
+// English
+const en: Dictionary = {
+  nav: {
+    home: "Home",
+    about: "About",
+    skills: "Skills",
+    projects: "Projects",
+  },
+
+  ui: {
+    toggleTheme: "Toggle theme",
+    language: "Language",
+    openMenu: "Open menu",
+    switchTo: "Switch to",
+    closeMenu: "Close menu",
+    mainNav: "Main navigation",
+    opensInNewTab: "opens in a new tab",
+  },
+
+  hero: {
+    greeting: "Hello, I'm",
+    firstLine: "Kevin",
+    lastName: "Reynaldi Panjaitan",
+    role: "Web & Mobile Developer",
+    description:
+      "I develop web and mobile applications using modern technologies to deliver functional, practical, and user-focused digital solutions.",
+    viewProjects: "View Projects",
+    downloadCv: "Download CV",
+    badge: "Web & Mobile Developer",
+    scrollDown: "Explore More",
+    scrollHint: "Scroll to explore",
+    openingTitle: "Building Ideas into Digital Experiences",
+    profileAlt: "Portrait of Kevin Reynaldi Panjaitan",
+    socialLabel: "Social media and contact",
+    availability: "Available for Collaboration",
+  },
+
+  skills: {
+    eyebrow: "Technologies I Use",
+    title: "Skills &",
+    titleAccent: "Technologies",
+    description:
+      "A range of technologies I use in web and mobile application development, covering programming languages, frontend, backend, databases, and development tools.",
+    categories: {
+      languages: "Programming Languages",
+      frontend: "Frontend & Mobile",
+      backend: "Backend & API",
+      database: "Database",
+      tools: "Tools & Workflow",
+    },
+  },
+};
+
+export const dictionary: Record<Locale, Dictionary> = {
+  id,
+  en,
+};

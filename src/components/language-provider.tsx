@@ -4,6 +4,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useSyncExternalStore,
   type ReactNode,
@@ -12,6 +13,7 @@ import { dictionary, type Dictionary, type Locale } from "@/data/site";
 
 const STORAGE_KEY = "portfolio-locale";
 const LOCALE_CHANGE_EVENT = "portfolio-locale-change";
+const DEFAULT_LOCALE: Locale = "id";
 
 type LanguageContextValue = {
   locale: Locale;
@@ -28,11 +30,14 @@ function isValidLocale(value: string | null): value is Locale {
 function getLocale(): Locale {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-
-    return isValidLocale(saved) ? saved : "en";
+    return isValidLocale(saved) ? saved : DEFAULT_LOCALE;
   } catch {
-    return "en";
+    return DEFAULT_LOCALE;
   }
+}
+
+function getServerLocale(): Locale {
+  return DEFAULT_LOCALE;
 }
 
 function subscribe(callback: () => void) {
@@ -45,25 +50,16 @@ function subscribe(callback: () => void) {
   };
 }
 
-function getServerLocale(): Locale {
-  return "en";
-}
+export function LanguageProvider({ children }: { children: ReactNode }) {
+  const locale = useSyncExternalStore(subscribe, getLocale, getServerLocale);
 
-export function LanguageProvider({
-  children,
-}: {
-  children: ReactNode;
-}) {
-  const locale = useSyncExternalStore(
-    subscribe,
-    getLocale,
-    getServerLocale,
-  );
+  useEffect(() => {
+    document.documentElement.lang = locale;
+  }, [locale]);
 
   const setLocale = useCallback((next: Locale) => {
     try {
       localStorage.setItem(STORAGE_KEY, next);
-
       window.dispatchEvent(new Event(LOCALE_CHANGE_EVENT));
     } catch {
       /* storage unavailable */

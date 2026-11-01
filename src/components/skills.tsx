@@ -48,7 +48,6 @@ const generic = (icon: LucideIcon): TechIcon => ({ kind: "generic", icon });
 type Tech = {
     name: string;
     icon?: TechIcon;
-    featured?: boolean;
 };
 
 type Category = {
@@ -60,7 +59,7 @@ const categories: readonly Category[] = [
     {
         id: "languages",
         items: [
-            { name: "TypeScript", icon: brand(siTypescript), featured: true },
+            { name: "TypeScript", icon: brand(siTypescript)},
             { name: "JavaScript", icon: brand(siJavascript) },
             { name: "C#", icon: brand(siSharp) },
             { name: "PHP", icon: brand(siPhp) },
@@ -72,9 +71,9 @@ const categories: readonly Category[] = [
     {
         id: "frontend",
         items: [
-            { name: "React.js", icon: brand(siReact), featured: true },
-            { name: "Next.js", icon: brand(siNextdotjs), featured: true },
-            { name: "Flutter", icon: brand(siFlutter), featured: true },
+            { name: "React.js", icon: brand(siReact) },
+            { name: "Next.js", icon: brand(siNextdotjs) },
+            { name: "Flutter", icon: brand(siFlutter) },
             { name: "Tailwind CSS", icon: brand(siTailwindcss) },
             { name: "Bootstrap", icon: brand(siBootstrap) },
         ],
@@ -82,7 +81,7 @@ const categories: readonly Category[] = [
     {
         id: "backend",
         items: [
-            { name: "Laravel", icon: brand(siLaravel), featured: true },
+            { name: "Laravel", icon: brand(siLaravel) },
             { name: "REST APIs", icon: generic(Webhook) },
             { name: "Firebase", icon: brand(siFirebase) },
         ],
@@ -90,8 +89,8 @@ const categories: readonly Category[] = [
     {
         id: "database",
         items: [
-            { name: "MySQL", icon: brand(siMysql), featured: true },
-            { name: "PostgreSQL", icon: brand(siPostgresql), featured: true },
+            { name: "MySQL", icon: brand(siMysql) },
+            { name: "PostgreSQL", icon: brand(siPostgresql) },
             { name: "Supabase", icon: brand(siSupabase) },
             { name: "Cloud Firestore", icon: generic(Database) },
         ],
@@ -257,11 +256,6 @@ export function Skills() {
                                 {...reveal(0.24, 8)}
                                 className="mt-6 flex items-center gap-2.5 text-sm text-muted-foreground/70"
                             >
-                                <span
-                                    aria-hidden
-                                    className="inline-block h-5 w-9 shrink-0 rounded-full border border-blue-500/30 bg-blue-500/[0.06]"
-                                />
-                                {t.skills.highlightNote}
                             </motion.p>
                         </div>
 
@@ -292,9 +286,7 @@ export function Skills() {
                                                     tech.icon
                                                         ? "pl-3"
                                                         : "pl-3.5",
-                                                    tech.featured
-                                                        ? "border-blue-500/30 bg-blue-500/[0.06] font-medium text-foreground hover:border-blue-400/50 hover:bg-blue-500/10"
-                                                        : "border-white/[0.08] bg-white/[0.02] text-muted-foreground hover:border-white/[0.18] hover:text-foreground"
+                                                    
                                                 )}
                                             >
                                                 {tech.icon && (

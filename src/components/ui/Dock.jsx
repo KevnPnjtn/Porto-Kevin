@@ -121,22 +121,26 @@ export default function Dock({
         role="toolbar"
         aria-label="Application dock"
       >
-        {items.map((item, index) => (
-          <DockItem
-            key={index}
-            onClick={item.onClick}
-            className={item.className}
-            mouseX={mouseX}
-            spring={spring}
-            distance={distance}
-            magnification={magnification}
-            baseItemSize={baseItemSize}
-            label={item.label}
-          >
-            <DockIcon>{item.icon}</DockIcon>
-            <DockLabel>{item.label}</DockLabel>
-          </DockItem>
-        ))}
+        {items.map((item, index) =>
+          item.divider ? (
+            <div key={`divider-${index}`} className="dock-divider" aria-hidden="true" />
+          ) : (
+            <DockItem
+              key={index}
+              onClick={item.onClick}
+              className={item.className}
+              mouseX={mouseX}
+              spring={spring}
+              distance={distance}
+              magnification={magnification}
+              baseItemSize={baseItemSize}
+              label={item.label}
+            >
+              <DockIcon>{item.icon}</DockIcon>
+              <DockLabel>{item.label}</DockLabel>
+            </DockItem>
+          )
+        )}
       </motion.div>
     </motion.div>
   );

@@ -55,3 +55,12 @@
   color: #fff;
   transform: translateX(-50%);
 }
+
+.dock-divider {
+  width: 1px;
+  height: 32px;
+  align-self: center;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 0 6px;
+  flex-shrink: 0;
+}
