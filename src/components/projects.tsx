@@ -436,8 +436,8 @@ function ProjectModal({
                                             aria-label={`${t.showImage} ${index + 1}`}
                                             aria-pressed={activeImage === index}
                                             className={`relative size-16 shrink-0 cursor-pointer overflow-hidden rounded-lg border bg-white/5 sm:size-20 ${activeImage === index
-                                                    ? "border-blue-400"
-                                                    : "border-white/10 opacity-60 hover:opacity-100"
+                                                ? "border-blue-400"
+                                                : "border-white/10 opacity-60 hover:opacity-100"
                                                 }`}
                                         >
                                             <ProjectPreview
@@ -468,9 +468,15 @@ function ProjectModal({
                                 {project.title}
                             </h3>
 
-                            <p className="mt-4 text-sm leading-7 text-white/60">
-                                {project.description[locale]}
-                            </p>
+                            <div className="mt-5 rounded-xl border border-white/10 bg-white/[0.025] p-4 sm:p-5">
+                                <h4 className="text-sm font-medium text-white">
+                                    {t.description}
+                                </h4>
+
+                                <p className="mt-2 text-justify text-sm leading-7 text-white/60">
+                                    {project.description[locale]}
+                                </p>
+                            </div>
 
                             <div className="mt-7">
                                 <h4 className="text-sm font-medium text-white">
@@ -679,7 +685,8 @@ function SertifikatModal({
                         <h4 className="text-sm font-medium text-white">
                             {t.description}
                         </h4>
-                        <p className="mt-2 text-sm leading-7 text-white/60">
+
+                        <p className="mt-2 text-justify text-sm leading-7 text-white/60">
                             {certificate.description}
                         </p>
                     </div>
@@ -852,8 +859,8 @@ export function Projects() {
                                 onClick={() => changeFilter(filter.value)}
                                 aria-pressed={isActive}
                                 className={`inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2.5 text-sm transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 ${isActive
-                                        ? "border-blue-400/40 bg-blue-500/15 text-blue-200"
-                                        : "border-white/10 bg-white/[0.025] text-white/55 hover:border-white/20 hover:bg-white/[0.06] hover:text-white"
+                                    ? "border-blue-400/40 bg-blue-500/15 text-blue-200"
+                                    : "border-white/10 bg-white/[0.025] text-white/55 hover:border-white/20 hover:bg-white/[0.06] hover:text-white"
                                     }`}
                             >
                                 {filter.value === "certificates" && (
@@ -864,8 +871,8 @@ export function Projects() {
 
                                 <span
                                     className={`rounded-full px-2 py-0.5 text-[11px] ${isActive
-                                            ? "bg-blue-400/15 text-blue-200"
-                                            : "bg-white/[0.06] text-white/45"
+                                        ? "bg-blue-400/15 text-blue-200"
+                                        : "bg-white/[0.06] text-white/45"
                                         }`}
                                 >
                                     {filter.count}
@@ -928,8 +935,8 @@ export function Projects() {
                                                     setSelectedProject(project)
                                                 }
                                                 aria-label={`${locale === "id"
-                                                        ? "Lihat detail proyek"
-                                                        : "View project details"
+                                                    ? "Lihat detail proyek"
+                                                    : "View project details"
                                                     } ${project.title}`}
                                                 className="group relative block aspect-[16/10] w-full shrink-0 cursor-pointer overflow-hidden bg-[#111118] focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-blue-400"
                                             >

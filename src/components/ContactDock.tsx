@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import type { ReactNode, SVGProps } from "react";
 import { Download, Mail } from "lucide-react";
 
@@ -15,6 +16,37 @@ type DockItemConfig = {
   className?: string;
   divider?: boolean;
 };
+
+function useModalOpen() {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const getDialogs = () =>
+      document.querySelectorAll('[role="dialog"][aria-modal="true"]');
+
+    const check = () => {
+      const active = Array.from(getDialogs()).some((el) => {
+        const opacity = parseFloat(getComputedStyle(el).opacity);
+        return opacity > 0.98;
+      });
+      setOpen(active);
+    };
+
+    check();
+
+    const observer = new MutationObserver(check);
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["style"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  return open;
+}
 
 function Base(props: SVGProps<SVGSVGElement>) {
   return (
@@ -79,6 +111,7 @@ const downloadFile = (path: string) => () => {
 export default function ContactDock() {
   const { locale, setLocale } = useLanguage();
   const nextLocale: Locale = locale === "id" ? "en" : "id";
+  const modalOpen = useModalOpen();
 
   const items: DockItemConfig[] = [
     {
@@ -105,10 +138,9 @@ export default function ContactDock() {
     },
     { divider: true },
     {
-      icon: <Download className="size-6" />,
+      icon: <Download className="size-6 text-sky-400" />,
       label: "Download CV",
       onClick: downloadFile(siteConfig.cvPath),
-      className: "dock-cv",
     },
     {
       icon: (
@@ -122,13 +154,21 @@ export default function ContactDock() {
   ];
 
   return (
-    <Dock
-      items={items}
-      panelHeight={68}
-      baseItemSize={48}
-      magnification={72}
-      distance={160}
-      dockHeight={160}
-    />
+    <div
+      aria-hidden={modalOpen}
+      className={`transition-all duration-200 ease-out ${modalOpen
+        ? "pointer-events-none invisible translate-y-4 opacity-0"
+        : "visible translate-y-0 opacity-100"
+        }`}
+    >
+      <Dock
+        items={items}
+        panelHeight={68}
+        baseItemSize={48}
+        magnification={72}
+        distance={160}
+        dockHeight={160}
+      />
+    </div>
   );
 }

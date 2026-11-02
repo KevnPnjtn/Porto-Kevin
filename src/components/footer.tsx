@@ -5,7 +5,7 @@ export function Footer() {
     return (
         <>
             {/* Floating Dock */}
-            <div className="fixed inset-x-0 bottom-20 z-50 flex justify-center px-4 pb-[env(safe-area-inset-bottom)]">
+            <div className="fixed bottom-20 left-0 z-50 flex w-screen justify-center px-4 pb-[env(safe-area-inset-bottom)]">
                 <ContactDock />
             </div>
 
