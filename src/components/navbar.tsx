@@ -1,8 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { MotionConfig, motion } from "motion/react";
+import {
+  AnimatePresence,
+  MotionConfig,
+  motion,
+  useScroll,
+  useSpring,
+} from "motion/react";
 import { cn } from "@/lib/utils";
+import { siteConfig } from "@/data/site";
 import type { SectionId } from "@/data/site";
 import { useLanguage } from "@/components/language-provider";
 
@@ -13,23 +20,31 @@ const sectionOrder = [
   "projects",
 ] as const satisfies readonly SectionId[];
 
-const ITEM_HEIGHT = 36;
-
 export function Navbar() {
   const { t } = useLanguage();
   const [active, setActive] = useState<SectionId>("home");
+  const [visible, setVisible] = useState(false);
+
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 30,
+    mass: 0.2,
+  });
 
   useEffect(() => {
     const sections = sectionOrder
       .map((id) => document.getElementById(id))
       .filter((element): element is HTMLElement => element !== null);
 
-    if (!sections.length) return;
-
     let frame = 0;
 
     const update = () => {
       frame = 0;
+
+      setVisible(window.scrollY > window.innerHeight * 0.5);
+
+      if (!sections.length) return;
 
       const line = window.innerHeight * 0.4;
       let current = sections[0].id;
@@ -62,101 +77,88 @@ export function Navbar() {
     };
   }, []);
 
-  const activeIndex = Math.max(0, sectionOrder.indexOf(active as never));
+  const brand = siteConfig.name.split(" ")[0];
 
   return (
     <MotionConfig reducedMotion="user">
-      <motion.aside
-        initial={{ opacity: 0, x: 16 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.35 }}
-        className="fixed right-4 top-1/2 z-50 -translate-y-1/2 sm:right-6"
-      >
-        <nav
-          aria-label={t.ui.mainNav}
-          className="group/nav rounded-3xl border border-border/80 bg-background/80 px-1 py-2 shadow-xl shadow-black/10 backdrop-blur-xl"
-        >
-          <div className="relative">
-            {/* Rail connecting the dots */}
-            <span
-              aria-hidden
-              className="absolute bottom-[18px] left-[18px] top-[18px] w-px -translate-x-1/2 bg-border"
-            />
+      <AnimatePresence>
+        {visible && (
+          <motion.header
+            initial={{ opacity: 0, y: -24, filter: "blur(6px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: -24, filter: "blur(6px)" }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="pointer-events-none fixed left-0 top-4 z-50 flex w-screen justify-center px-4 sm:top-5"
+          >
+            <nav
+              aria-label={t.ui.mainNav}
+              className="pointer-events-auto relative flex items-center gap-1 overflow-hidden rounded-full border border-white/10 bg-black/60 p-1.5 shadow-2xl shadow-black/40 backdrop-blur-xl sm:gap-2"
+            >
+              {/* Brand (desktop) */}
+              <a
+                href="#home"
+                aria-label={brand}
+                className="hidden items-center gap-2 rounded-full py-1.5 pl-3 pr-4 text-sm font-semibold tracking-tight text-white outline-none focus-visible:ring-2 focus-visible:ring-blue-500 sm:flex"
+              >
+                <span className="size-2 rounded-full bg-blue-500 shadow-[0_0_10px_2px_rgba(59,130,246,0.55)]" />
+                {brand}
+              </a>
 
-            {/* Blue progress from Home down to the active dot */}
-            <motion.span
-              aria-hidden
-              initial={false}
-              animate={{ height: activeIndex * ITEM_HEIGHT }}
-              transition={{ type: "spring", stiffness: 350, damping: 30 }}
-              className="absolute left-[18px] top-[18px] w-px -translate-x-1/2 bg-blue-500"
-            />
+              <span
+                aria-hidden
+                className="hidden h-5 w-px bg-white/10 sm:block"
+              />
 
-            {sectionOrder.map((id) => {
-              const isActive = active === id;
+              {/* Menu */}
+              <ul className="flex items-center">
+                {sectionOrder.map((id) => {
+                  const isActive = active === id;
 
-              return (
-                <a
-                  key={id}
-                  href={`#${id}`}
-                  aria-label={t.nav[id]}
-                  aria-current={isActive ? "location" : undefined}
-                  title={t.nav[id]}
-                  className="group relative z-10 flex h-9 items-center rounded-full px-3 outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-                >
-                  {/* Dot */}
-                  <span className="relative flex size-3 shrink-0 items-center justify-center rounded-full bg-background">
-                    <span
-                      className={cn(
-                        "size-1.5 rounded-full transition-colors duration-200",
-                        isActive
-                          ? "bg-transparent"
-                          : "bg-muted-foreground/50 group-hover:bg-muted-foreground",
-                      )}
-                    />
-
-                    {isActive && (
-                      <motion.span
-                        layoutId="nav-active-dot"
-                        className="absolute size-2.5 rounded-full bg-blue-500 shadow-[0_0_10px_2px_rgba(59,130,246,0.55)]"
-                        transition={{
-                          type: "spring",
-                          stiffness: 350,
-                          damping: 30,
-                        }}
-                      />
-                    )}
-                  </span>
-
-                  {/* Label: always visible for the active item, others appear
-                      when the navigator is hovered or focused (hidden on mobile) */}
-                  <span
-                    className={cn(
-                      "hidden grid-cols-[0fr] opacity-0 transition-[grid-template-columns,opacity] duration-300 ease-out sm:grid",
-                      "group-hover/nav:grid-cols-[1fr] group-hover/nav:opacity-100",
-                      "group-focus-within/nav:grid-cols-[1fr] group-focus-within/nav:opacity-100",
-                      isActive && "grid-cols-[1fr] opacity-100",
-                    )}
-                  >
-                    <span className="min-w-0 overflow-hidden">
-                      <span
-                        className={cn(
-                          "block whitespace-nowrap pl-3 pr-1 text-[13px] font-medium transition-colors duration-200",
-                          isActive
-                            ? "text-foreground"
-                            : "text-muted-foreground group-hover:text-foreground",
-                        )}
+                  return (
+                    <li key={id}>
+                      <a
+                        href={`#${id}`}
+                        aria-current={isActive ? "location" : undefined}
+                        className="relative block rounded-full px-3 py-2 text-[13px] font-medium outline-none focus-visible:ring-2 focus-visible:ring-blue-500 sm:px-4"
                       >
-                        {t.nav[id]}
-                      </span>
-                    </span>
-                  </span>
-                </a>
-              );
-            })}
-          </div>
-        </nav>
-      </motion.aside>
+                        {isActive && (
+                          <motion.span
+                            layoutId="nav-active-pill"
+                            className="absolute inset-0 rounded-full bg-white/10"
+                            transition={{
+                              type: "spring",
+                              stiffness: 380,
+                              damping: 32,
+                            }}
+                          />
+                        )}
+
+                        <span
+                          className={cn(
+                            "relative z-10 transition-colors duration-200",
+                            isActive
+                              ? "text-white"
+                              : "text-white/55 hover:text-white",
+                          )}
+                        >
+                          {t.nav[id]}
+                        </span>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+
+              {/* Progress scroll */}
+              <motion.span
+                aria-hidden
+                style={{ scaleX: progress }}
+                className="absolute inset-x-3 bottom-0 h-px origin-left bg-blue-500"
+              />
+            </nav>
+          </motion.header>
+        )}
+      </AnimatePresence>
     </MotionConfig>
   );
 }

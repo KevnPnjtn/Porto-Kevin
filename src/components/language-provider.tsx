@@ -62,7 +62,6 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       localStorage.setItem(STORAGE_KEY, next);
       window.dispatchEvent(new Event(LOCALE_CHANGE_EVENT));
     } catch {
-      /* storage unavailable */
     }
   }, []);
 

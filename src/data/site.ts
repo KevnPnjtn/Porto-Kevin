@@ -57,6 +57,32 @@ const id = {
     availability: "Terbuka untuk Kolaborasi",
   },
 
+  about: {
+    eyebrow: "Siapa Saya",
+    heading: "Tentang",
+    headingAccent: "Saya",
+    paragraphs: [
+      "Saya lulusan Teknik Informatika yang bersemangat membangun solusi digital yang praktis melalui pengembangan web dan mobile. Saya senang mengubah ide menjadi aplikasi yang berfungsi, mulai dari merancang pengalaman pengguna hingga mengembangkan fitur andal yang menjawab kebutuhan nyata.",
+      "Melalui proyek akademik, magang, dan pengembangan dalam tim, saya memperoleh pengalaman di berbagai tahap proses pengembangan. Saya senang berkolaborasi, menerima tantangan, dan terus mempelajari teknologi baru untuk meningkatkan cara saya membangun dan menyelesaikan masalah.",
+    ],
+    details: [
+      { label: "Fokus", value: "Pengembangan Web & Mobile" },
+      { label: "Pendidikan", value: "Teknik Informatika" },
+      { label: "Berdomisili di", value: "Batam, Indonesia" },
+    ],
+    codeFile: "about-me.tsx",
+    codeAlt: "Editor kode yang menampilkan lingkungan kerja pemrograman",
+    status: "membangun & belajar",
+    experienceLink: "Selengkapnya tentang pengalaman saya",
+  },
+
+  projects: {
+    eyebrow: "Proyek & Sertifikat",
+    heading: "Karya Pilihan",
+    description:
+      "Kumpulan proyek, eksperimen, dan pengalaman digital yang pernah saya kerjakan.",
+  },
+
   skills: {
     eyebrow: "Teknologi yang Digunakan",
     title: "Keahlian &",
@@ -110,6 +136,32 @@ const en: Dictionary = {
     profileAlt: "Portrait of Kevin Reynaldi Panjaitan",
     socialLabel: "Social media and contact",
     availability: "Available for Collaboration",
+  },
+
+  about: {
+    eyebrow: "Who I am",
+    heading: "About",
+    headingAccent: "Me",
+    paragraphs: [
+      "I'm an Informatics Engineering graduate with a passion for building practical digital solutions through web and mobile development. I enjoy turning ideas into functional applications, from designing user experiences to developing reliable features that solve real-world needs.",
+      "Through academic projects, internships, and team-based development, I've gained experience working across different stages of the development process. I enjoy collaborating with others, taking on challenges, and continuously learning new technologies to improve how I build and solve problems.",
+    ],
+    details: [
+      { label: "Focus", value: "Web & Mobile Development" },
+      { label: "Education", value: "Informatics Engineering" },
+      { label: "Based in", value: "Batam, Indonesia" },
+    ],
+    codeFile: "about-me.tsx",
+    codeAlt: "Code editor showing a programming workspace",
+    status: "building & learning",
+    experienceLink: "More about my experience",
+  },
+
+  projects: {
+    eyebrow: "Projects & Certificates",
+    heading: "Selected Work",
+    description:
+      "A collection of projects, experiments, and digital experiences I've worked on.",
   },
 
   skills: {

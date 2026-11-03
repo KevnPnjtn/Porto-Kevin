@@ -24,6 +24,7 @@ import {
     siSupabase,
     siTailwindcss,
     siTypescript,
+    siNodedotjs,
     type SimpleIcon,
 } from "simple-icons";
 import { CodeXml, Database, Webhook, type LucideIcon } from "lucide-react";
@@ -82,6 +83,7 @@ const categories: readonly Category[] = [
         id: "backend",
         items: [
             { name: "Laravel", icon: brand(siLaravel) },
+            { name: "Node.js", icon: brand(siNodedotjs) },
             { name: "REST APIs", icon: generic(Webhook) },
             { name: "Firebase", icon: brand(siFirebase) },
         ],

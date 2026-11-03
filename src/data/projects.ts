@@ -32,12 +32,12 @@ export const projects: Project[] = [
       en: "Web Application",
     },
     shortDescription: {
-      id: "Platform layanan digital yang membantu UMKM memperkirakan biaya layanan melalui sistem kalkulasi anggaran berbasis aturan.",
-      en: "A digital service platform that helps UMKM estimate service costs through a rule-based budgeting system.",
+      id: "Platform layanan digital untuk UMKM yang dikembangkan dalam kompetisi, dengan kalkulator anggaran interaktif untuk merekomendasikan paket layanan sesuai kebutuhan pengguna.",
+      en: "A competition-developed digital service platform for UMKM, featuring an interactive budget calculator that recommends service packages based on user requirements.",
     },
     description: {
-      id: "WEBKITA merupakan platform layanan digital yang dirancang untuk membantu UMKM mengidentifikasi dan memperkirakan biaya kebutuhan digital mereka. Platform ini menyediakan kalkulator anggaran berbasis aturan yang memproses pilihan layanan dan kebutuhan pengguna untuk menghasilkan estimasi biaya. Selain itu, WEBKITA mengintegrasikan proses pemilihan layanan, pemesanan, pembayaran, dan pengelolaan administrasi dalam satu platform.",
-      en: "WEBKITA is a digital service platform designed to help UMKM identify and estimate the costs of their digital needs. It features a rule-based budget calculator that processes user-selected services and requirements to generate cost estimates. The platform also provides an integrated workflow for service selection, orders, payments, and administrative management.",
+      id: "WEBKITA merupakan platform layanan digital berbasis web yang dikembangkan sebagai bagian dari proyek kompetisi untuk membantu UMKM merencanakan kebutuhan transformasi digital melalui informasi layanan dan estimasi biaya yang lebih transparan. Platform ini menyediakan katalog layanan seperti pengembangan website, desain UI/UX, dan optimasi digital. Fitur utamanya adalah Kalkulator Budget interaktif yang menggunakan Rule-Based System dengan metode Forward Chaining untuk mencocokkan anggaran pengguna dengan rentang harga pada database, kemudian menghasilkan rekomendasi paket layanan beserta spesifikasinya. Selain itu, pengguna dapat mengajukan pesanan proyek dan memantau progres pengerjaan melalui dashboard klien, sedangkan admin dapat mengelola paket layanan serta memantau pesanan melalui dashboard administrasi.",
+      en: "WEBKITA is a web-based digital service platform developed as part of a competition project to help UMKM plan their digital transformation needs through accessible service information and more transparent cost estimates. The platform provides a catalog of digital services, including website development, UI/UX design, and digital optimization. Its core feature is an interactive Budget Calculator powered by a Rule-Based System using Forward Chaining to match user budgets against pricing ranges stored in the database and generate relevant service package recommendations with their specifications. Users can also submit project requests and monitor development progress through a client dashboard, while administrators can manage service packages and monitor orders through an administrative dashboard.",
     },
     role: {
       id: "Anggota tim pengembang",
@@ -49,23 +49,33 @@ export const projects: Project[] = [
       "/projects/webkita/webkita-2.webp",
       "/projects/webkita/webkita-3.webp",
     ],
-    techStack: ["React", "TypeScript", "Supabase", "REST API"],
+    techStack: [
+      "React",
+      "TypeScript",
+      "Supabase",
+      "REST API",
+      "Forward Chaining",
+    ],
     features: [
       {
-        id: "Kalkulasi anggaran berbasis aturan berdasarkan kebutuhan pengguna",
-        en: "Rule-based budget calculation using user requirements",
+        id: "Kalkulator Budget interaktif untuk menghasilkan rekomendasi paket berdasarkan anggaran pengguna",
+        en: "Interactive Budget Calculator that recommends service packages based on user budgets",
       },
       {
-        id: "Pemilihan paket dan fitur layanan digital",
-        en: "Digital service package and feature selection",
+        id: "Sistem rekomendasi berbasis aturan menggunakan metode Forward Chaining",
+        en: "Rule-based recommendation system using the Forward Chaining method",
       },
       {
-        id: "Pengelolaan pesanan dan pembayaran klien",
-        en: "Client order and payment management",
+        id: "Katalog paket layanan digital dengan informasi harga dan spesifikasi fitur",
+        en: "Digital service package catalog with pricing and feature specifications",
       },
       {
-        id: "Pengelolaan paket, pengguna, dan pesanan oleh admin",
-        en: "Administrative management for packages, users, and orders",
+        id: "Pengajuan pesanan proyek dan pemantauan progres pengerjaan melalui dashboard klien",
+        en: "Project order submission and progress monitoring through a client dashboard",
+      },
+      {
+        id: "Dashboard admin untuk mengelola paket layanan dan memantau pesanan",
+        en: "Admin dashboard for managing service packages and monitoring orders",
       },
     ],
     links: [
@@ -76,6 +86,7 @@ export const projects: Project[] = [
     ],
   },
 
+
   {
     id: "inventori",
     title: "Warehouse Management System",
@@ -84,16 +95,16 @@ export const projects: Project[] = [
       en: "Web Application",
     },
     shortDescription: {
-      id: "Sistem berbasis web untuk mengelola inventaris gudang dan mendukung pemantauan stok secara lebih terstruktur.",
-      en: "A web-based system designed to organize warehouse inventory and support more structured stock management.",
+      id: "Aplikasi manajemen inventaris berbasis web untuk mengelola data produk, memantau pergerakan stok, dan menyajikan laporan persediaan.",
+      en: "A web-based inventory management application for managing product data, monitoring stock movements, and generating inventory reports.",
     },
     description: {
-      id: "Warehouse Management System merupakan aplikasi web yang dikembangkan untuk mendukung operasional gudang melalui pengelolaan inventaris terpusat. Sistem ini menyediakan pengelolaan data barang dan pemantauan informasi stok agar proses administrasi serta pengelolaan persediaan menjadi lebih terorganisir.",
-      en: "Warehouse Management System is a web application developed to support warehouse operations through centralized inventory management. It provides a structured way to manage inventory data and monitor stock information, helping make warehouse administration more organized and accessible.",
+      id: "Warehouse Management System merupakan aplikasi inventaris berbasis web yang dirancang untuk mendigitalisasi pengelolaan aset dan persediaan barang gudang. Sistem ini menyediakan dashboard untuk memantau kondisi inventaris, pengelolaan data produk dan kategori, serta pencatatan transaksi barang masuk dan keluar yang secara otomatis memperbarui jumlah stok. Selain itu, tersedia fitur stok opname untuk mencocokkan data sistem dengan kondisi fisik barang, serta modul pelaporan yang menyajikan informasi riwayat stok, nilai inventaris, harga pokok penjualan (HPP), omzet, dan laba bersih. Seluruh fitur terintegrasi untuk mendukung proses pengelolaan inventaris yang lebih terstruktur dan akurat.",
+      en: "Warehouse Management System is a web-based inventory application designed to digitalize warehouse asset and stock management. The system provides a monitoring dashboard, product and category management, and incoming and outgoing stock transaction records that automatically update inventory quantities. It also includes stock opname functionality to reconcile system records with physical inventory, along with reporting modules that present stock history, inventory value, cost of goods sold (COGS), revenue, and net profit. These features work together to support more structured and accurate inventory management.",
     },
     role: {
-      id: "Anggota tim pengembang",
-      en: "Project team member",
+      id: "Pengembang Aplikasi Inventaris",
+      en: "Inventory Application Developer",
     },
     images: [
       "/projects/inventori/inventori-1.webp",
@@ -105,77 +116,98 @@ export const projects: Project[] = [
     techStack: ["PHP", "Laravel", "React", "Tailwind CSS", "MySQL"],
     features: [
       {
-        id: "Pengelolaan data inventaris terpusat",
-        en: "Centralized inventory data management",
+        id: "Dashboard pemantauan stok, jumlah produk, pergerakan barang, dan ringkasan keuangan",
+        en: "Dashboard for monitoring stock levels, product counts, stock movements, and financial summaries",
       },
       {
-        id: "Pemantauan stok barang gudang",
-        en: "Warehouse stock monitoring",
+        id: "Pengelolaan data produk, kategori, kode barang, dan batas stok minimum",
+        en: "Product, category, item code, and minimum stock level management",
       },
       {
-        id: "Administrasi inventaris yang terstruktur",
-        en: "Structured inventory administration",
+        id: "Pencatatan transaksi barang masuk dan keluar dengan pembaruan stok otomatis",
+        en: "Incoming and outgoing stock transaction records with automatic inventory updates",
+      },
+      {
+        id: "Stok opname untuk mencocokkan dan menyesuaikan data stok sistem dengan kondisi fisik",
+        en: "Stock opname for reconciling and adjusting system records against physical inventory",
+      },
+      {
+        id: "Laporan stok opname, kartu stok, serta laporan laba rugi yang dapat diekspor ke Excel",
+        en: "Stock opname, stock card, and profit and loss reports with Excel export",
+      },
+    ],
+    links: [
+      {
+        label: "GitHub",
+        url: "https://github.com/KevnPnjtn/Warehouse-System",
       },
     ],
   },
 
-  {
-  id: "guideme",
-  title: "Guide Me",
-  category: {
-    id: "Aplikasi Mobile",
-    en: "Mobile Application",
-  },
-  shortDescription: {
-    id: "Aplikasi pariwisata digital untuk menjelajahi destinasi, event, dan galeri wisata, serta melakukan pemesanan tiket secara online.",
-    en: "A digital tourism application for exploring destinations, events, and photo galleries, with online ticket booking.",
-  },
-  description: {
-    id: "Guide Me merupakan aplikasi pariwisata berbasis mobile yang dikembangkan untuk membantu wisatawan menjelajahi berbagai destinasi wisata di Kota Batam. Aplikasi ini menyediakan informasi destinasi, event, galeri foto, serta rekomendasi wisata yang dapat ditelusuri melalui fitur pencarian dan kategori. Pengguna juga dapat melihat detail destinasi, merencanakan perjalanan melalui peta dan navigasi rute, melakukan pemesanan tiket, serta memantau status transaksi. Selain itu, tersedia fitur ulasan dan rating serta forum diskusi untuk mendukung interaksi antar pengguna. Aplikasi dilengkapi dengan dashboard admin untuk mengelola konten wisata, akun pengguna, dan transaksi.",
-    en: "Guide Me is a mobile-based tourism application developed to help travelers explore various tourist destinations in Batam. It provides destination information, local events, photo galleries, and tourism recommendations accessible through search and category filters. Users can view destination details, plan trips using interactive maps and route navigation, book tickets, and track transaction status. The application also includes reviews and ratings, along with a discussion forum to encourage user interaction. An integrated admin dashboard is provided to manage tourism content, user accounts, and transactions.",
-  },
-  role: {
-    id: "Frontend Developer & System Analyst (Proyek Tim)",
-    en: "Frontend Developer & System Analyst (Team Project)",
-  },
-  images: [
-    "/projects/guideme/guideme-home.webp",
-    "/projects/guideme/guideme-2.webp",
-    "/projects/guideme/guideme-3.webp",
-    "/projects/guideme/guideme-4.webp",
-    "/projects/guideme/guideme-5.webp",
-  ],
-  techStack: ["Flutter", "Dart", "Firebase", "Midtrans"],
-  features: [
-    {
-      id: "Penelusuran destinasi wisata, event, dan galeri foto",
-      en: "Tourism destination, event, and photo gallery exploration",
-    },
-    {
-      id: "Pencarian, filter kategori, dan rekomendasi destinasi wisata",
-      en: "Search, category filtering, and tourism destination recommendations",
-    },
-    {
-      id: "Peta interaktif dan navigasi rute perjalanan",
-      en: "Interactive maps and travel route navigation",
-    },
-    {
-      id: "Pemesanan tiket dan simulasi pembayaran online",
-      en: "Ticket booking and online payment simulation",
-    },
-    {
-      id: "Ulasan dan rating serta forum diskusi pengguna",
-      en: "User reviews and ratings, along with discussion forums",
-    },
-    {
-      id: "Dashboard admin untuk pengelolaan destinasi, event, pengguna, dan transaksi",
-      en: "Admin dashboard for managing destinations, events, users, and transactions",
-    },
-  ],
-},
 
-  
-{
+  {
+    id: "guideme",
+    title: "Guide Me",
+    category: {
+      id: "Aplikasi Mobile",
+      en: "Mobile Application",
+    },
+    shortDescription: {
+      id: "Aplikasi pariwisata digital untuk menjelajahi destinasi, event, dan galeri wisata, serta melakukan pemesanan tiket secara online.",
+      en: "A digital tourism application for exploring destinations, events, and photo galleries, with online ticket booking.",
+    },
+    description: {
+      id: "Guide Me merupakan aplikasi pariwisata berbasis mobile yang dikembangkan untuk membantu wisatawan menjelajahi berbagai destinasi wisata di Kota Batam. Aplikasi ini menyediakan informasi destinasi, event, galeri foto, serta rekomendasi wisata yang dapat ditelusuri melalui fitur pencarian dan kategori. Pengguna juga dapat melihat detail destinasi, merencanakan perjalanan melalui peta dan navigasi rute, melakukan pemesanan tiket, serta memantau status transaksi. Selain itu, tersedia fitur ulasan dan rating serta forum diskusi untuk mendukung interaksi antar pengguna. Aplikasi dilengkapi dengan dashboard admin untuk mengelola konten wisata, akun pengguna, dan transaksi.",
+      en: "Guide Me is a mobile-based tourism application developed to help travelers explore various tourist destinations in Batam. It provides destination information, local events, photo galleries, and tourism recommendations accessible through search and category filters. Users can view destination details, plan trips using interactive maps and route navigation, book tickets, and track transaction status. The application also includes reviews and ratings, along with a discussion forum to encourage user interaction. An integrated admin dashboard is provided to manage tourism content, user accounts, and transactions.",
+    },
+    role: {
+      id: "Frontend Developer & System Analyst (Proyek Tim)",
+      en: "Frontend Developer & System Analyst (Team Project)",
+    },
+    images: [
+      "/projects/guideme/guideme-home.webp",
+      "/projects/guideme/guideme-2.webp",
+      "/projects/guideme/guideme-3.webp",
+      "/projects/guideme/guideme-4.webp",
+      "/projects/guideme/guideme-5.webp",
+    ],
+    techStack: ["Flutter", "Dart", "Firebase", "Midtrans"],
+    features: [
+      {
+        id: "Penelusuran destinasi wisata, event, dan galeri foto",
+        en: "Tourism destination, event, and photo gallery exploration",
+      },
+      {
+        id: "Pencarian, filter kategori, dan rekomendasi destinasi wisata",
+        en: "Search, category filtering, and tourism destination recommendations",
+      },
+      {
+        id: "Peta interaktif dan navigasi rute perjalanan",
+        en: "Interactive maps and travel route navigation",
+      },
+      {
+        id: "Pemesanan tiket dan simulasi pembayaran online",
+        en: "Ticket booking and online payment simulation",
+      },
+      {
+        id: "Ulasan dan rating serta forum diskusi pengguna",
+        en: "User reviews and ratings, along with discussion forums",
+      },
+      {
+        id: "Dashboard admin untuk pengelolaan destinasi, event, pengguna, dan transaksi",
+        en: "Admin dashboard for managing destinations, events, users, and transactions",
+      },
+    ],
+    links: [
+      {
+        label: "GitHub",
+        url: "https://github.com/RikardoAnju/Guide-Me-v2",
+      },
+    ],
+  },
+
+
+  {
     id: "microlearning",
     title: "MicroLearning",
     category: {
@@ -229,7 +261,13 @@ export const projects: Project[] = [
         en: "User profile management and student information access",
       },
     ],
+    links: [
+      {
+        label: "GitHub",
+        url: "https://github.com/fadliaditya06/Microlearning-Mobile",
+      },
+    ],
   },
 
 ]
-  
+

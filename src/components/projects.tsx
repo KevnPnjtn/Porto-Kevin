@@ -41,7 +41,6 @@ import {
 
 import { projects, type Project } from "@/data/projects";
 import { certificates, type Certificate } from "@/data/certificates";
-import { portfolioContent } from "@/data/portfolio-content";
 import { useLanguage } from "@/components/language-provider";
 
 const INITIAL_ITEMS = 6;
@@ -130,9 +129,7 @@ const translations = {
     },
 };
 
-/* --------------------------------------------------
-   TECHNOLOGY ICONS
--------------------------------------------------- */
+/* TECHNOLOGY ICONS */
 
 const technologyIcons: Record<string, SimpleIcon> = {
     Bootstrap: siBootstrap,
@@ -179,9 +176,7 @@ function TechnologyIcon({ name }: { name: string }) {
     );
 }
 
-/* --------------------------------------------------
-   PROJECT PREVIEW
--------------------------------------------------- */
+/* PROJECT PREVIEW */
 
 function ProjectPreview({
     src,
@@ -225,9 +220,7 @@ function ProjectPreview({
     );
 }
 
-/* --------------------------------------------------
-   CERTIFICATE PREVIEW
--------------------------------------------------- */
+/* CERTIFICATE PREVIEW */
 
 function SertifikatPreview({
     src,
@@ -271,9 +264,7 @@ function SertifikatPreview({
     );
 }
 
-/* --------------------------------------------------
-   PROJECT MODAL
--------------------------------------------------- */
+/* PROJECT MODAL */
 
 function ProjectModal({
     project,
@@ -527,12 +518,14 @@ function ProjectModal({
                             )}
 
                             {project.links && project.links.length > 0 && (
-                                <div className="mt-5 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6">
+                                <div className="relative z-20 mt-5 flex w-full flex-wrap items-center justify-start gap-3 border-t border-white/10 pt-6">
                                     {project.links.map((link) => {
+                                        const label = link.label.trim().toLowerCase();
+
                                         const isGithub =
                                             link.url.toLowerCase().includes("github.com") ||
-                                            ["github", "kode", "code"].includes(
-                                                link.label.trim().toLowerCase(),
+                                            ["github", "kode", "code", "frontend", "backend"].includes(
+                                                label,
                                             );
 
                                         return (
@@ -546,13 +539,13 @@ function ProjectModal({
                                                         ? `${t.viewCode} ${project.title} di GitHub`
                                                         : `${t.viewLink}: ${link.label}`
                                                 }
-                                                className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-[#08080a] px-3.5 py-2 text-sm font-semibold text-white transition hover:border-white/30 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400"
+                                                className="relative z-20 isolate inline-flex w-fit cursor-pointer touch-manipulation items-center justify-center gap-2.5 rounded-full border border-white/15 bg-[#08080a] px-4 py-2.5 text-sm font-semibold text-white transition hover:border-white/30 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400"
                                             >
                                                 {isGithub && (
                                                     <svg
                                                         aria-hidden="true"
                                                         viewBox="0 0 24 24"
-                                                        className="size-5 shrink-0"
+                                                        className="pointer-events-none size-5 shrink-0"
                                                         fill="currentColor"
                                                     >
                                                         <path d={siGithub.path} />
@@ -562,7 +555,10 @@ function ProjectModal({
                                                 {isGithub ? t.viewCode : link.label}
 
                                                 {!isGithub && (
-                                                    <ExternalLink size={15} />
+                                                    <ExternalLink
+                                                        size={15}
+                                                        className="pointer-events-none"
+                                                    />
                                                 )}
                                             </a>
                                         );
@@ -577,9 +573,7 @@ function ProjectModal({
     );
 }
 
-/* --------------------------------------------------
-   CERTIFICATE MODAL
--------------------------------------------------- */
+/* CERTIFICATE MODAL */
 
 function SertifikatModal({
     certificate,
@@ -698,23 +692,18 @@ function SertifikatModal({
                             {t.learnings}
                         </h4>
 
-                        <ul className="mt-3 space-y-3">
+                        <ul className="mt-3 list-disc space-y-3 pl-5 marker:text-white/40">
                             {certificate.learnings.map((learning, index) => (
                                 <li
                                     key={`${learning}-${index}`}
-                                    className="flex items-start gap-3 text-sm leading-6 text-white/60"
+                                    className="pl-1 text-sm leading-6 text-white/60"
                                 >
-                                    <Check
-                                        size={16}
-                                        className="mt-1 shrink-0 text-blue-400"
-                                    />
-                                    <span>{learning}</span>
+                                    {learning}
                                 </li>
                             ))}
                         </ul>
                     </div>
                 )}
-
                 {certificate.skills.length > 0 && (
                     <div className="mt-5 flex flex-wrap gap-2">
                         {certificate.skills.map((skill) => (
@@ -733,15 +722,13 @@ function SertifikatModal({
     );
 }
 
-/* --------------------------------------------------
-   PROJECTS & CERTIFICATES SECTION
--------------------------------------------------- */
+/* PROJECTS & CERTIFICATES SECTION */
 
 export function Projects() {
-    const { locale } = useLanguage();
 
+    const { locale, t: site } = useLanguage();
     const t = translations[locale];
-    const content = portfolioContent.projects;
+    const content = site.projects;
 
     const [visibleCount, setVisibleCount] = useState(INITIAL_ITEMS);
 
